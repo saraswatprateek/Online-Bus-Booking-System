@@ -19,15 +19,15 @@
                     }
 
                     $query = "SELECT *  FROM  posts WHERE post_id = $selected_bus ";
-                    $select_all_posts_query = mysqli_query($connection,$query);
+                    $select_all_bus_query = mysqli_query($connection,$query);
 
-                    while($row = mysqli_fetch_assoc($select_all_posts_query)) {
-                        $post_title = $row['post_title'];
-                        $post_author = $row['post_author'];
-                        $post_date = $row['post_date'];
-                        $post_image = $row['post_image'];
-                        $post_content = $row['post_content'];
-                        $post_id = $row['post_id'];
+                    while($row = mysqli_fetch_assoc($select_all_bus_query)) {
+                        $bus_title = $row['post_title'];
+                        $bus_author = $row['post_author'];
+                        $bus_date = $row['post_date'];
+                        $bus_image = $row['post_image'];
+                        $bus_content = $row['post_content'];
+                        $bus_id = $row['post_id'];
                         ?>
 
                         <h1 class="page-header">
@@ -37,17 +37,17 @@
 
                         <!-- First Blog Post -->
                         <h2>
-                            <a href="bus_info.php?bus_id=<?php echo $post_id; ?>"><?php echo $post_title; ?></a>
+                            <a href="bus_info.php?bus_id=<?php echo $post_id; ?>"><?php echo $bus_title; ?></a>
                         </h2>
                         <p class="lead">
-                            by <a href="index.php"><?php echo $post_author; ?></a>
+                            by <a href="index.php"><?php echo $bus_author; ?></a>
                         </p>
-                        <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date; ?></p>
+                        <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $bus_date; ?></p>
                         <hr>
-                        <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="">
+                        <img class="img-responsive" src="images/<?php echo $bus_image; ?>" alt="">
                         <hr>
-                        <p><?php echo $post_content ?></p>
-                        <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                        <p><?php echo $bus_content ?></p>
+                        
 
                         <hr>
                     <?php } ?>
@@ -55,14 +55,48 @@
 
                     <!-- Blog Comments -->
 
+                <?php 
+
+                    if (isset($_POST['submit_query'])) {
+                        $user_name = $_POST['user_name'];
+                        $user_email = $_POST['user_email'];
+                        $user_query = $_POST['user_query'];
+
+                        $query = "INSERT INTO query(query_bus_id, query_user, query_email, query_date, query_content, query_replied) VALUES ('$selected_bus', '$user_name', '$user_email', now(), '$user_query', 'no')";
+
+                        $query_insert = mysqli_query($connection, $query);
+                        if(!$query_insert) {
+                            die("Query Failed" . mysqli_error($connection));
+                        }
+
+                        $query = "UPDATE posts SET post_query_count = post_query_count + 1 WHERE post_id = $bus_id";
+                        $increase_query_count = mysqli_query($connection,$query);
+                    }
+
+                ?>
+
+
+
                 <!-- Comments Form -->
                 <div class="well">
                     <h4>Leave a Comment:</h4>
-                    <form role="form">
+                    <form action="bus_info.php?bus_id=<?php echo $selected_bus ?>" method="post" role="form">
+                        
                         <div class="form-group">
-                            <textarea class="form-control" rows="3"></textarea>
+                            <label for="name">Name</label>
+                            <input class="form-control" name="user_name"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" name="user_email"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Query</label>
+                            <textarea class="form-control" rows="3" name="user_query"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" name="submit_query">Submit</button>
                     </form>
                 </div>
 
@@ -70,18 +104,19 @@
 
                 <!-- Posted Comments -->
 
-                <!-- Comment -->
-                <div class="media">
-                    <a class="pull-left" href="#">
-                        <img class="media-object" src="http://placehold.it/64x64" alt="">
-                    </a>
-                    <div class="media-body">
-                        <h4 class="media-heading">Start Bootstrap
-                            <small>August 25, 2014 at 9:30 PM</small>
-                        </h4>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                    </div>
-                </div>
+                <?php 
+
+                $query = "SELECT * FROM query WHERE query_bus_id = $bus_id";
+                $get_query = mysqli_query($connection,$query);
+
+                while ($row = mysqli_fetch_assoc($get_query)) {
+                    
+                $query_user = $row['query_user'];
+                $query_content = $row['query_content'];
+                $query_date = $row['query_date'];
+
+                ?>
+
 
                 <!-- Comment -->
                 <div class="media">
@@ -89,25 +124,14 @@
                         <img class="media-object" src="http://placehold.it/64x64" alt="">
                     </a>
                     <div class="media-body">
-                        <h4 class="media-heading">Start Bootstrap
-                            <small>August 25, 2014 at 9:30 PM</small>
+                        <h4 class="media-heading"> <?php echo $query_user; ?>
+                            <small><?php echo $query_date; ?></small>
                         </h4>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                        <!-- Nested Comment -->
-                        <div class="media">
-                            <a class="pull-left" href="#">
-                                <img class="media-object" src="http://placehold.it/64x64" alt="">
-                            </a>
-                            <div class="media-body">
-                                <h4 class="media-heading">Nested Start Bootstrap
-                                    <small>August 25, 2014 at 9:30 PM</small>
-                                </h4>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                            </div>
-                        </div>
-                        <!-- End Nested Comment -->
+                        <?php echo $query_content; ?>
                     </div>
-                </div>      
+                </div>
+      
+                <?php } ?>
 
             </div>
 

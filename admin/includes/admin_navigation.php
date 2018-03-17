@@ -48,16 +48,16 @@
                         <a href="categories.php"><i class="fa fa-fw fa-desktop"></i> Categories</a>
                     </li>
                     <li>
-                        <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Comments</a>
+                        <a href="query.php"><i class="fa fa-fw fa-wrench"></i> Comments</a>
                     </li>
                     <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Users <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="demo" class="collapse">
+                        <a href="javascript:;" data-toggle="collapse" data-target="#demo1"><i class="fa fa-fw fa-arrows-v"></i> Users <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="demo1" class="collapse">
                             <li>
-                                <a href="#">All Users</a>
+                                <a href="users.php">All Users</a>
                             </li>
                             <li>
-                                <a href="#">Edit Users</a>
+                                <a href="users.php?source=update_user">Edit Buses</a>
                             </li>
                         </ul>
                     </li>

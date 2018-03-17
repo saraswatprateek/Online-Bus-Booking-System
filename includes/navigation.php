@@ -24,8 +24,10 @@
                             echo "<li> <a href='#'> {$cat_title} </a></li>";
                         }
                      ?>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="admin/index.php">Admin</a>
+                        <a href="admin/index.php"><i class="fa fa-fw fa-desktop"></i>Admin</a>
                     </li>
 
 <!--                     <li>

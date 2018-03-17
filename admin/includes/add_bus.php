@@ -17,7 +17,7 @@
 
 		move_uploaded_file($tmp_image, "images/$image");
 
-		$query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_source, post_destination, post_via, post_via_time, post_comment_count) VALUES({$category}, '{$title}', '{$admin}', '{$date}', '{$image}', '{$bus_detail}', '{$source}', '{$destination}', '{$intermediate}', '{$via_time}',4)";
+		$query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_source, post_destination, post_via, post_via_time) VALUES({$category}, '{$title}', '{$admin}', '{$date}', '{$image}', '{$bus_detail}', '{$source}', '{$destination}', '{$intermediate}', '{$via_time}')";
 
 		$bus_entry = mysqli_query($connection,$query);
 
