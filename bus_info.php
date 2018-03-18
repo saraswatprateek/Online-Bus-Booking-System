@@ -58,7 +58,10 @@
                 <?php 
 
                     if (isset($_POST['submit_query'])) {
-                        $user_name = $_POST['user_name'];
+                        $user_name = ucfirst($_SESSION['s_username']) ;
+                        if($user_name == "") {
+                            $user_name = "(unknown)";
+                        }
                         $user_email = $_POST['user_email'];
                         $user_query = $_POST['user_query'];
 
@@ -82,10 +85,10 @@
                     <h4>Leave a Comment:</h4>
                     <form action="bus_info.php?bus_id=<?php echo $selected_bus ?>" method="post" role="form">
                         
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="name">Name</label>
                             <input class="form-control" name="user_name"></textarea>
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <label for="email">Email</label>
