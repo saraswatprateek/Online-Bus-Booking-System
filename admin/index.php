@@ -13,8 +13,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Welcone To Admin
-                            <small>Author</small>
+                            Welcome To Admin
+                            <small><?php echo ucfirst($_SESSION['s_username']);   ?></small>
                         </h1>
                     </div>
                 </div>

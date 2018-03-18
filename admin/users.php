@@ -68,7 +68,7 @@
                                     <tr>
                                         <td><?php echo $user_id ?></td>
                                         <td><?php echo $username ?></td>
-                                        <td><?php echo $user_lastname ?></td>
+                                        <td><?php echo $user_firstname ?></td>
                                         <td><?php echo $user_lastname ?></td>
                                         <td><?php echo $user_email ?></td>
                                         <td><?php echo $user_phoneno ?></td>
@@ -76,6 +76,7 @@
                                         
                                         <?php echo "<td><a href='users.php?delete=$user_id'>Delete</a></td>"; ?>
                                         <?php echo "<td><a href='users.php?source=update_user&user_id=$user_id'>Edit</a></td>"; ?>
+                                        <?php echo "<td><a href='users.php?alter_role=$user_id'>Alter Role</a></td>"; ?>
                                     </tr>
                                     <?php } ?>
                                 </tbody>
@@ -99,10 +100,29 @@
                             $query = "DELETE FROM users WHERE user_id = {$user_idd} ";
 
                             $delete_query = mysqli_query($connection,$query);
-                            //header("Location : users.php");
+                            header("Location : users.php");
                             if(!$delete_query) {
                                 die("Query Failed" . mysqli_error($connection));
                             }
+                        }
+
+                        ?>
+
+                        <?php 
+
+                        if (isset($_GET['alter_role'])) {
+                            $user_id = $_GET['alter_role'];
+
+                            if($user_role == "subscriber")
+                            $query = "UPDATE users SET user_role = 'admin' WHERE user_id = '$user_id'";
+                            else if($user_role == "admin")
+                            $query = "UPDATE users SET user_role = 'subscriber' WHERE user_id = '$user_id'";
+                            $add_admin = mysqli_query($connection, $query);
+
+                            if(!$add_admin) {
+                                die("Query Failed" . mysqli_error($connection));
+                            }
+                            header("Location: users.php");
                         }
 
                         ?>

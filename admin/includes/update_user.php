@@ -21,23 +21,17 @@ while($row = mysqli_fetch_assoc($select_posts)) {
 
 if (isset($_POST['update-user'])) {
 	
-	$user_firstname = $_POST['user-firstname'];
+	$user_firstname = $_POST['user_firstname'];
 	$user_lastname = $_POST['user_lastname'];
-	$source = $_POST['source'];
-	$destination = $_POST['destination'];
-	$title = $source . " to " . $destination;
-	$intermediate = $_POST['intermediate'];
-	$date = $_POST['date'];
-	$via_time = $_POST['via-time']; 
-	$bus_detail = $_POST['bus-detail'];
+	
 
-	$query = "UPDATE posts SET post_title='{$title}', post_date='{$date}', post_source='{$source}', post_destination='{$destination}', post_author='{$admin}', post_category_id={$category}, post_via='{$intermediate}', post_via_time='{$via_time}', post_content='{$bus_detail}' WHERE post_id=$edit_bus_id ";
+	$query = "UPDATE users SET user_firstname = '$user_firstname', user_lastname = '$user_lastname' WHERE user_id=$edit_user_id ";
 	
 	//echo $title . " " . $admin;
 	
-	$update_bus = mysqli_query($connection,$query);
+	$update_user_detail = mysqli_query($connection,$query);
 
-	if (!$update_bus) {
+	if (!$update_user_detail) {
 		die("Query Failed" . mysqli_error($connection));
 	}
 
