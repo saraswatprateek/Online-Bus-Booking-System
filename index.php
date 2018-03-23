@@ -12,8 +12,30 @@
             <!-- Blog Entries Column -->
             <div class="col-md-8">
 
-                <?php 
+                <?php
+                    $bus_per_page = 3;
+
+                    if (isset($_GET['page'])) {
+                        $page = $_GET['page'] ;  
+                    }
+                    else {
+                        $page = "";
+                    }
+
+                    if ($page == "" || $page == 1) {
+                        $page_1 = 0;
+                    }
+                    else {
+                        $page_1 = ($page * $bus_per_page) - $bus_per_page;
+                    }
+
                     $query = "SELECT *  FROM  posts";
+                    $bus_count = mysqli_query($connection,$query);
+                    $count = mysqli_num_rows($bus_count);
+
+                    $count = ceil($count / $bus_per_page) ;
+
+                    $query = "SELECT * FROM posts LIMIT $page_1,$bus_per_page";
                     $select_all_posts_query = mysqli_query($connection,$query);
 
                     while($row = mysqli_fetch_assoc($select_all_posts_query)) {
@@ -31,6 +53,8 @@
                         </h1>
 
                         <!-- First Blog Post -->
+
+                        <!-- <?php echo $count; ?> -->
                         <h2>
                             <a href="bus_info.php?bus_id=<?php echo $post_id; ?>"><?php echo $post_title; ?></a>
                         </h2>
@@ -57,5 +81,14 @@
         <!-- /.row -->
 
         <hr>
+
+        <ul class="pager">
+            <?php
+                for ($i=1; $i <= $count; $i++) { 
+                    echo "<li><a href='index.php?page=$i'>$i</a></li>";
+                }
+
+            ?>
+        </ul>
 
 <?php include "includes/footer.php"; ?>
