@@ -28,6 +28,8 @@
                         $bus_image = $row['post_image'];
                         $bus_content = $row['post_content'];
                         $bus_id = $row['post_id'];
+                        $bus_via = $row['post_via'];
+                        $bus_stations = split(" ",$bus_via);
                         ?>
 
                         <h1 class="page-header">
@@ -48,6 +50,18 @@
                         <hr>
                         <p><?php echo $bus_content ?></p>
                         
+                        <div class="jumbotron jumb">
+                            <h2><b>Stations Covered:</b></h2>
+                            <ul>
+                                <?php
+
+                                    for ($i=0; $i < sizeof($bus_stations); $i++) { ?>
+                                        <li><?php echo $bus_stations[$i] ?></li> <?php
+                                    }
+
+                                ?>
+                            </ul>
+                        </div>
 
                         <hr>
                     <?php } ?>
