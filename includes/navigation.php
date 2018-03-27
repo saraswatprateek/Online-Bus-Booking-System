@@ -21,13 +21,18 @@
 
                         while($row = mysqli_fetch_assoc($select_all_categories_query)) {
                             $cat_title = $row['cat_title'];
-                            echo "<li> <a href='#'> {$cat_title} </a></li>";
+                            $cat_id = $row['cat_id'];
+                            echo "<li> <a href='category.php?category=$cat_id'> {$cat_title} </a></li>";
                         }
                      ?>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <a href="admin/index.php"><i class="fa fa-fw fa-desktop"></i>Admin</a>
+                    </li>
+
+                    <li>
+                        <a href="registration.php"><i class="fa fa-fw fa-desktop"></i>Register Here!</a>
                     </li>
 
 <!--                     <li>
@@ -39,11 +44,16 @@
                     <li>
                         <a href="#">Contact</a>
                     </li> -->
+
+                    
                     <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo ucfirst($_SESSION['s_username']); ?> <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php 
+
+                    if(isset($_SESSION['s_username']))
+                    echo ucfirst($_SESSION['s_username']); ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                            <a href="profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
                         </li>
                         <li class="divider"></li>
                         <li>

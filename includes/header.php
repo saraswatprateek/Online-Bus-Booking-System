@@ -1,5 +1,10 @@
 <?php ob_start(); ?>
-<?php session_start(); ?>
+<?php session_start(); 
+// $_SESSION['s_username'] = null;
+// $_SESSION['s_firstname'] = null;
+// $_SESSION['s_lastname'] = null;
+// $_SESSION['s_role'] = null;
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,6 +30,40 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+<style>
+.jumb {
+    zoom: 1;
+    filter: alpha(opacity=50);
+    opacity: 0.6;
+}
+.jumb:hover {
+    opacity: 1;
+}
+.cont {
+  position: relative;
+  width: 700px;
+  height: 300px;
+  overflow: hidden;
+}
+
+.item {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.item img {
+  -webkit-transition: 0.6s ease;
+  transition: 0.6s ease;
+}
+
+.container:hover .item img {
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+}
+
+</style>
 
 </head>
 

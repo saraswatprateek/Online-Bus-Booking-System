@@ -47,6 +47,7 @@
                         <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $bus_date; ?></p>
                         <hr>
                         <img class="img-responsive" src="images/<?php echo $bus_image; ?>" alt="">
+
                         <hr>
                         <p><?php echo $bus_content ?></p>
                         
@@ -61,6 +62,81 @@
 
                                 ?>
                             </ul>
+                        </div>
+
+                        <div class="jumbotron">
+                            <div class="container-fluid">
+                                <h2>Enter Details:</h2>
+
+                                <form action="" method="post" class="form-horizontal">
+
+                                    <select name="passenger_count" style="margin-bottom: 15px;margin-top: 15px;">
+                                        <option value="0">Ticket Count</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                    </select>
+                                    <button class="btn-xs btn-primary" style="margin-left: 5px;">GO</button>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="email">Source:</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="email" placeholder="Source" name="source">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="email">Destination:</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="email" placeholder="Destination" name="name">
+                                        </div>
+                                    </div>
+
+                                <?php
+
+                                if (isset($_POST['passenger_count'])) {
+                                    $count = $_POST['passenger_count'];
+                                    //echo "<h1>$count</h1>";
+
+                                    for ($i=0; $i < $count; $i++) { 
+
+                                        ?>
+                                        <h6><?php echo "Passenger "; echo $i+1;?></h6>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2" for="email">Name:</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="email" placeholder="Name" name="name<?php echo "$i" ?>">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2" for="email">Age:</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="email" placeholder="Age" name="age<?php echo "$i" ?>">
+                                            </div>
+                                        </div>
+                                        <?php
+                                    }
+
+                                }
+
+                                ?>
+
+                                <button class="btn btn-primary" name="book" style="margin-left: 40%; margin-top: 15px;">Book Tickets</button>
+
+                                </form>
+
+                                <?php
+
+                                if (isset($_POST['book'])) {
+                                    
+                                }
+
+                                ?>
+                            </div>
                         </div>
 
                         <hr>

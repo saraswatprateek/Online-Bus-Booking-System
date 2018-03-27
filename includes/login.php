@@ -2,7 +2,7 @@
 <?php session_start(); ?>
 <?php 
 
-if (isset($_POST['login'])) {
+if (isset($_POST['login']) || isset($_POST['register'])) {
 	//echo "hello";
 	$username = $_POST['username'];
 	$password = $_POST['password'];
@@ -21,6 +21,7 @@ if (isset($_POST['login'])) {
 		$db_user_firstname = $row['user_firstname'];
 		$db_user_lastname = $row['user_lastname'];
 		$db_user_role = $row['user_role'];
+		$db_user_image = $row['user_image'];
 
 		if($username === $db_username && $password === $db_user_password) {
 
@@ -28,6 +29,7 @@ if (isset($_POST['login'])) {
 			$_SESSION['s_firstname'] = $db_user_firstname;
 			$_SESSION['s_lastname'] = $db_user_lastname;
 			$_SESSION['s_role'] = $db_user_role;
+			$_SESSION['s_image'] = $db_user_image;
 
 			if ($db_user_role == 'admin') {
 				header("Location: ../admin");
