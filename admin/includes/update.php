@@ -55,8 +55,27 @@ if (isset($_POST['update-bus'])) {
 	</div>
 
 	<div class="form-group">
-		<label for="category">Category</label>
-		<input value="<?php echo $category; ?>" type="text" class="form-control" name="category">
+		<select name="category">
+			
+			<?php 
+
+			$query = "SELECT * FROM categories";
+			$select_category = mysqli_query($connection,$query);
+
+			if (!$select_category) {
+				die("Query Failed" . mysqli_error($connection));
+			}
+
+			while ($row = mysqli_fetch_assoc($select_category)) {
+				$cat_id = $row['cat_id'];
+				$cat_title = $row['cat_title'];
+			
+				echo "<option value='$cat_id'>$cat_title</option>";
+			}
+
+			?>
+
+		</select>
 	</div>
 
 	<div class="form-group">
@@ -85,8 +104,7 @@ if (isset($_POST['update-bus'])) {
 	</div>
 
 	<div class="form-group">
-		<label for="bus-image">Bus Image</label>
-		<input type="file" name="image" >
+		<img width="100" src="../images/<?php echo $image ?>">
 	</div>
 
 	<div class="form-group">

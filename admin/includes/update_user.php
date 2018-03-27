@@ -23,9 +23,14 @@ if (isset($_POST['update-user'])) {
 	
 	$user_firstname = $_POST['user_firstname'];
 	$user_lastname = $_POST['user_lastname'];
+
+	$image = $_FILES['image']['name'];
+	$tmp_image = $_FILES['image']['tmp_name'];
+
+	move_uploaded_file($tmp_image, "images/$image");
 	
 
-	$query = "UPDATE users SET user_firstname = '$user_firstname', user_lastname = '$user_lastname' WHERE user_id=$edit_user_id ";
+	$query = "UPDATE users SET user_firstname = '$user_firstname', user_lastname = '$user_lastname' , user_image='$image' WHERE user_id=$edit_user_id ";
 	
 	//echo $title . " " . $admin;
 	
