@@ -19,6 +19,7 @@
                     }
 
                     $query = "SELECT *  FROM  posts WHERE post_id = $selected_bus ";
+
                     $select_all_bus_query = mysqli_query($connection,$query);
 
                     while($row = mysqli_fetch_assoc($select_all_bus_query)) {
@@ -83,6 +84,9 @@
                                     </select>
                                     <button class="btn-xs btn-primary" style="margin-left: 5px;">GO</button>
 
+                                </form>
+
+                                <form action="bus_info.php?bus_id=<?php echo $selected_bus ?>&count=<?php echo $_POST['passenger_count'] ?>" method="post" class="form-horizontal">
                                     <div class="form-group">
                                         <label class="control-label col-sm-2" for="email">Source:</label>
                                         <div class="col-sm-10">
@@ -92,7 +96,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-sm-2" for="email">Destination:</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="email" placeholder="Destination" name="name">
+                                            <input type="text" class="form-control" id="email" placeholder="Destination" name="destination">
                                         </div>
                                     </div>
 
@@ -132,7 +136,42 @@
                                 <?php
 
                                 if (isset($_POST['book'])) {
+                                    //echo "<h1>hello</h1>";
+                                    if (isset($_GET['count'])) {
+                                        $count = $_GET['count'];
+                                    }
+                                    $source = $_POST['source'];
+                                    $destination = $_POST['destination'];
                                     
+                                    // $query = "INSERT INTO orders(bus_id,user_id,user_name,user_age,source,destination,date) VALUES($selected_bus, $_SESSION['s_username'],$source,$destination,now())";
+
+                                    $arr = array();
+                                    $arr1 = array();
+                                    for ($i=0; $i < $count; $i++) {
+                                        //echo "<h1>hello</h1>";
+                                        $name_query = 'name'.$i ;
+                                        $age_query = 'age'.$i ;
+                                        //echo $what;
+                                        array_push($arr,$_POST[$name_query]);
+                                        array_push($arr1,$_POST[$age_query]);
+                                    }
+                                    for ($i=0; $i < $count; $i++) { 
+
+                                        $curr_name = $arr[$i];
+                                        $curr_age = $arr1[$i];
+                                        $user_id = $_SESSION['s_id'];
+
+                                        $query = "INSERT INTO orders(bus_id, user_id, user_name, user_age, source, destination,date) VALUES($selected_bus, $user_id , '$curr_name', '$curr_age', '$source', '$destination', now())";
+
+                                        //echo $arr[$i];
+                                        //echo $_SESSION['s_id'];
+
+                                        $booking_query = mysqli_query($connection,$query);
+                                        if (!$booking_query) {
+                                            die("Query Failed" . mysqli_error($connection));
+                                        }
+                                    }
+                                    header("Location: profile.php");
                                 }
 
                                 ?>
