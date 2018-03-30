@@ -4,85 +4,143 @@
     <!-- Navigation -->
     <?php include "includes/navigation.php"; ?>
 
-<?php
-
-if (isset($_POST['register'])) {
-echo "registered";
-    $username = $_POST['username'];
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
-    $email = $_POST['email'];
-    $phone_no = $_POST['phone_no'];
-    $password = $_POST['password'];
-
-    $image = $_FILES['image']['name'];
-    $tmp_image = $_FILES['image']['tmp_name'];
-
-    move_uploaded_file($tmp_image, "images/$image");
-
-
-$query = "INSERT INTO users(username, user_password, user_firstname, user_lastname, user_email, user_phoneno, user_role, user_image) VALUES('$username', '$password', '$firstname', '$lastname', '$email', '$phone_no', 'subscriber', '$image') ";
-
-$register_user = mysqli_query($connection, $query);
-
-if(!$register_user) {
-    die("Query Failed" . mysqli_error($connection));
-}
-
-header("Location: login.php");
-}
-
-?>
-
     <!-- Page Content -->
     <!-- <div class="container jumbotron" style="width: 45%; border-radius: 15px"> -->
 
     <div class="container" style="width: 50%;">
                               
-              <h2 style="margin-left: 40%;">Profile</h2>
-              <?php echo $_SESSION['s_image'] ; ?>
-               <img src="images/<?php echo $_SESSION['s_username']; ?>" class="img-circle" alt="Profile"> 
-              <form action="" method="post" enctype="multipart/form-data">
-                
-                <div class="form-group">
-                  <label for="email">Username:</label>
-                  <input type="text" class="form-control" id="email" placeholder="Enter Username" name="username">
-                </div>
+        <h2 style="margin-left: 40%;">Profile</h2>
+        <?php $image = $_SESSION['s_image'] ; ?>
+        <img src="admin/images/<?php echo $image;?>" width="200" style="margin-left: 32%;" class="img-circle" alt="Profile"> 
+        <br><br><br><br>
+        <div class="tab">
+            <button class="tablinks" style="width: 33%" onclick="openCity(event, 'Personel Details')">Personel Details</button>
+            <button class="tablinks" style="width: 33%" onclick="openCity(event, 'Tickets Booked')">Tickets Booked</button>
+            <button class="tablinks" style="width: 33%"  onclick="openCity(event, 'Edit Details')">Edit Details</button>
+        </div>
 
-                <div class="form-group">
-                  <label for="email">Firstname:</label>
-                  <input type="text" class="form-control" id="email" placeholder="Enter Firstname" name="firstname">
-                </div>
 
-                <div class="form-group">
-                  <label for="email">Lastname:</label>
-                  <input type="text" class="form-control" id="email" placeholder="Enter Lastname" name="lastname">
-                </div>
+        <div id="Personel Details" class="tabcontent">
+          <h3>Details</h3>
+          <br>
+          <?php
+          $curr_user_id = $_SESSION['s_id'];
+          //echo $curr_user_id;
+          $query = "SELECT * FROM users where user_id = $curr_user_id";
 
-                <div class="form-group">
-                    <label for="bus-image">Bus Image</label>
-                    <input type="file" name="image" >
-                </div>
+          $select_user = mysqli_query($connection, $query);
 
-                <div class="form-group">
-                  <label for="email">Email:</label>
-                  <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
-                </div>
-                
-                <div class="form-group">
-                  <label for="pwd">Phone No:</label>
-                  <input type="text" class="form-control" id="pwd" placeholder="Enter password" name="phone_no">
-                </div>
+          while ($row = mysqli_fetch_assoc($select_user)) {
+            $username = $row['username'];
+            $user_firstname = $row['user_firstname'];
+            $user_lastname = $row['user_lastname'];
+            $user_email = $row['user_email'];
+            $user_phoneno = $row['user_phoneno'];
+            ?>
 
-                <div class="form-group">
-                  <label for="pwd">Password:</label>
-                  <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password">
-                </div>
-        
-                <button type="submit" class="btn btn-primary" name="register" style="margin-left: 45%; margin-top: 20px;">Register</button>
-              </form>
+            <table class="table table-striped" style="width: 50%">
+              <tbody>
+                <tr>
+                  <td><b>Username:</b> </td>
+                  <td><?php echo $username; ?></td>
+                </tr>
+                <tr>
+                  <td><b>FirstName:</b> </td>
+                  <td><?php echo ucfirst($user_firstname); ?></td>
+                </tr>
+                <tr>
+                  <td><b>Lastname: </b></td>
+                  <td><?php echo ucfirst($user_lastname); ?></td>
+                </tr>
+                <tr>
+                  <td><b>Email: </b></td>
+                  <td><?php echo $user_email; ?></td>
+                </tr>
+                <tr>
+                  <td><b>Phone No: </b></td>
+                  <td><?php echo $user_phoneno; ?></td>
+                </tr>
+              </tbody>
+            </table>
+
+          <?php } ?>
+        </div>
+
+        <div id="Tickets Booked" class="tabcontent">
+          <h3>Tickets Booked</h3>
+          <br>
+          <?php
+
+          $query = "SELECT * FROM orders where user_id = $curr_user_id";
+
+          $select_user_orders = mysqli_query($connection, $query);
+
+          while ($row = mysqli_fetch_assoc($select_user_orders)) {
+            $passenger = $row['user_name'];
+            $passenger_age = $row['user_age'];
+            $source = $row['source'];
+            $destination = $row['destination'];
+            $dob = $row['date'];
+            $cost = $row['cost'];
+
+            ?>
+
+            <table class="table table-striped" style="width: 50%">
+              <tbody>
+                <tr>
+                  <td><b>Passenger Name:</b> </td>
+                  <td><?php echo $passenger; ?></td>
+                </tr>
+                <tr>
+                  <td><b>Passenger Age:</b> </td>
+                  <td><?php echo $passenger_age; ?></td>
+                </tr>
+                <tr>
+                  <td><b>Source: </b></td>
+                  <td><?php echo ucfirst($source); ?></td>
+                </tr>
+                <tr>
+                  <td><b>Destination: </b></td>
+                  <td><?php echo ucfirst($destination); ?></td>
+                </tr>
+                <tr>
+                  <td><b>Date Of Booking: </b></td>
+                  <td><?php echo $dob; ?></td>
+                </tr>
+                <tr>
+                  <td><b>Cost: </b></td>
+                  <td><?php echo $cost; ?></td>
+                </tr>
+
+              </tbody>
+            </table>
+
+          <?php } ?>
+        </div>
+
+        <div id="Edit Details" class="tabcontent">
+          <h3>Edit Details</h3>
+          <p>Hello</p>
+        </div>
 
     </div>
         <hr>
+
+
+    <script>
+    function openCity(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+    </script>
 
 <?php include "includes/footer.php"; ?> 
