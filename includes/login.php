@@ -30,6 +30,7 @@ if (isset($_POST['login']) || isset($_POST['register'])) {
 			$_SESSION['s_lastname'] = $db_user_lastname;
 			$_SESSION['s_role'] = $db_user_role;
 			$_SESSION['s_image'] = $db_user_image;
+			$_SESSION['s_id'] = $db_user_id;
 
 			if ($db_user_role == 'admin') {
 				header("Location: ../admin");

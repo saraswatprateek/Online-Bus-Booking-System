@@ -40,28 +40,59 @@
 .jumb:hover {
     opacity: 1;
 }
-.cont {
-  position: relative;
-  width: 700px;
-  height: 300px;
-  overflow: hidden;
+
+
+
+body {font-family: Arial;}
+
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
 }
 
-.item {
-  position: absolute;
-  top: 0;
-  left: 0;
+/* Style the buttons inside the tab */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
 }
 
-.item img {
-  -webkit-transition: 0.6s ease;
-  transition: 0.6s ease;
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
 }
 
-.container:hover .item img {
-  -webkit-transform: scale(1.2);
-  transform: scale(1.2);
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #ccc;
 }
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    -webkit-animation: fadeEffect 1s;
+    animation: fadeEffect 1s;
+}
+
+/* Fade in tabs */
+@-webkit-keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
 
 </style>
 
