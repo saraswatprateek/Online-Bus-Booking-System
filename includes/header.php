@@ -99,3 +99,6 @@ body {font-family: Arial;}
 </head>
 
 <body>
+    <img style="position: fixed; width: 100%;height: 100%; margin-top: -20px; " src="new.jpg">
+    <div style="position: fixed; width: 100%;height: 100%; margin-top: -20px; background-color: rgba(51, 27, 6, 0.4);"></div>
+    <div style="opacity: 0.9;">

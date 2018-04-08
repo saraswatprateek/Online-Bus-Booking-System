@@ -7,7 +7,7 @@
     <!-- Page Content -->
     <!-- <div class="container jumbotron" style="width: 45%; border-radius: 15px"> -->
 
-    <div class="container" style="width: 50%;">
+    <div class="container" style="width: 50%; background-color: rgba(51, 27, 6,0.9)">
                               
         <h2 style="margin-left: 40%;">Profile</h2>
         <?php $image = $_SESSION['s_image'] ; ?>

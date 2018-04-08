@@ -1,5 +1,5 @@
 <?php include"db.php" ?>
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-inverse navbar-fixed-top" style=" background-color: rgb(51, 27, 6);" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -29,12 +29,14 @@
                 <ul class="nav navbar-nav navbar-right">
 
                     <?php 
+                    if(isset($_SESSION['s_username'])) {
                         if ($_SESSION['s_role']=='admin') {
                             ?>
                             <li>
                                 <a href="admin/index.php"><i class="fa fa-fw fa-desktop"></i>Admin</a>
                             </li>
-                    <?php } ?>
+                    }
+                    <?php } } ?>
 
                     <li>
                         <a href="registration.php"><i class="fa fa-fw fa-desktop"></i>Register Here!</a>

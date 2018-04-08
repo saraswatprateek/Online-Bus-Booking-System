@@ -5,7 +5,7 @@
     <?php include "includes/navigation.php"; ?>
 
     <!-- Page Content -->
-    <div class="container">
+    <div class="container" style="background: rgba(51, 27, 6,0.6);">
 
         <div class="row">
 
@@ -47,10 +47,10 @@
                         $post_id = $row['post_id'];
                         ?>
 
-                        <h1 class="page-header">
-                        Page Heading
-                        <small>Secondary Text</small>
-                        </h1>
+                        <!-- <h1 class="page-header">
+                        Company's Name
+                        <small>Company's Name</small>
+                        </h1> -->
 
                         <!-- First Blog Post -->
 
@@ -70,7 +70,9 @@
                         <!-- <a class="btn btn-primary" href="bus_info.php?bus_id=<?php echo $post_id; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a> -->
 
                         <hr>
-                    <?php } ?>      
+                        <br><br>
+                    <?php } ?>   
+
 
             </div>
 
@@ -81,6 +83,7 @@
         <!-- /.row -->
 
         <hr>
+
 
         <ul class="pager">
             <?php
@@ -96,5 +99,6 @@
 
             ?>
         </ul>
+
 
 <?php include "includes/footer.php"; ?>
