@@ -108,6 +108,7 @@
                             if(!$delete_bus) {
                                 die("Query Failed" . mysqli_error($delete_bus));
                             }
+                            header("Location: buses.php");
                         }
 
                         ?>
