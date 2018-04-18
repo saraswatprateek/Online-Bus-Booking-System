@@ -21,6 +21,22 @@
 
                         <div class="col-xs-6">
 
+                            <?php
+
+                                if (isset($_GET['delete'])) {
+                                    $cat_del_id = $_GET['delete'];
+
+                                    $query = "DELETE FROM categories WHERE cat_id=$cat_del_id";
+
+                                    $delete_cat = mysqli_query($connection,$query);
+
+                                }
+
+                            ?>
+
+
+
+
                             <?php 
                             if(isset($_POST['submit'])) {
 
@@ -74,6 +90,7 @@
                                         echo "<tr>";
                                         echo "<td> {$cat_id} </td>";
                                         echo "<td> {$cat_title} </td>";
+                                        echo "<td><a href='categories.php?delete=$cat_id'>Delete</a></td>";
                                         echo "</tr>";
                                     }
 

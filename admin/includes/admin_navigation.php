@@ -64,6 +64,9 @@
                     <li>
                         <a href="../profile.php"><i class="fa fa-fw fa-dashboard"></i> Profile</a>
                     </li>
+                    <li>
+                        <a href="report.php"><i class="fa fa-fw fa-book"></i> Reports</a>
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

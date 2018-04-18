@@ -90,7 +90,7 @@ if (isset($_POST['update-bus'])) {
 
 	<div class="form-group">
 		<label for="bus-date">Bus Date</label>
-		<input value="<?php echo $date; ?>" type="text" class="form-control" name="date" placeholder="DD-MM-YY">
+		<input value="<?php echo $date ?>" type="date" style="margin-top: 10px;" min=<?php echo date('Y-m-d');?> max=<?php echo date('Y-m-d', strtotime(date('Y-m-d'). ' + 29 days'));?> name="date" class="form-control" id="date" placeholder="<?php echo $date ?>" >
 	</div>
 
 	<div class="form-group">

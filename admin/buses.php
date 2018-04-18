@@ -69,6 +69,9 @@
                                             $date = $row['post_date'];
                                             $time = $row['post_via_time'];
                                         
+                                        if ($date > date('Y-m-d')) {
+                                            # code...
+                                        
 
                                      ?>
                                     <tr>
@@ -82,8 +85,9 @@
                                         <td><?php echo $time ?></td>
                                         <?php echo "<td><a href='buses.php?delete=$bus_id'>Delete</a></td>"; ?>
                                         <?php echo "<td><a href='buses.php?source=update&bus_id=$bus_id'>Update</a></td>"; ?>
+                                        <?php echo "<td><a href='buses.php?clone_bus_id=$bus_id'>Clone</a></td>"; ?>
                                     </tr>
-                                    <?php } ?>
+                                    <?php } }?>
                                 </tbody>
                                 </table><?php
                                 break;
@@ -95,6 +99,41 @@
                         //     
                         // }   
                         ?>
+
+
+                        <?php
+
+                        if (isset($_GET['clone_bus_id'])) {
+                            $bus_id = $_GET['clone_bus_id'];
+
+
+                        $query = "SELECT *  FROM  posts WHERE post_id=$bus_id";
+                        $select_posts = mysqli_query($connection,$query);
+
+                        while($row = mysqli_fetch_assoc($select_posts)) {
+                            $admin_name = $row['post_author'];
+                            $title = $row['post_title'];
+                            $bus_detail = $row['post_content'];
+                            $source = $row['post_source'];
+                            $destination = $row['post_destination'];
+                            $intermediate = $row['post_via'];
+                            $category = $row['post_category_id'];
+                            $image = $row['post_image'];
+                            $date = $row['post_date'];
+                            $via_time = $row['post_via_time'];
+                            $max_seats = $row['max_seats'];
+                            $available_seats = $row['available_seats'];
+
+                            $query_new = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_source, post_destination, post_via, post_via_time, max_seats, available_seats) VALUES({$category}, '{$title}', '{$admin_name}', '{$date}', '{$image}', '{$bus_detail}', '{$source}', '{$destination}', '{$intermediate}', '{$via_time}', $max_seats, $available_seats)";
+                            }
+
+                            $clone_bus = mysqli_query($connection,$query_new);
+
+                            header("Location:buses.php");
+                        }
+                        ?>
+
+
 
                         <?php 
 

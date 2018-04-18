@@ -11,18 +11,24 @@
 		$date = $_POST['date'];
 		$via_time = $_POST['via-time'];
 		$bus_detail = $_POST['bus-detail'];
+		$max_seats = $_POST['max_seats'];
 
 		$image = $_FILES['image']['name'];
 		$tmp_image = $_FILES['image']['tmp_name'];
 
 		move_uploaded_file($tmp_image, "images/$image");
 
-		$query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_source, post_destination, post_via, post_via_time) VALUES({$category}, '{$title}', '{$admin}', '{$date}', '{$image}', '{$bus_detail}', '{$source}', '{$destination}', '{$intermediate}', '{$via_time}')";
+		if ($admin=="" || $category=="" || $source=="" || $destination=="" || $title=="" || $intermediate=="" || $date=="" || $via_time=="" || $bus_detail=="" || $max_seats=="") {
+			echo "**All Fields Mandatory";
+		}
+		else {
+			$query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_source, post_destination, post_via, post_via_time, max_seats, available_seats) VALUES({$category}, '{$title}', '{$admin}', '{$date}', '{$image}', '{$bus_detail}', '{$source}', '{$destination}', '{$intermediate}', '{$via_time}', $max_seats, $max_seats)";
 
-		$bus_entry = mysqli_query($connection,$query);
+			$bus_entry = mysqli_query($connection,$query);
 
-		if (!$bus_entry) {
-			die("Query Failed");
+			if (!$bus_entry) {
+				die("Query Failed");
+			}
 		}
 	}
 
@@ -37,8 +43,27 @@
 	</div>
 
 	<div class="form-group">
-		<label for="category">Category</label>
-		<input type="text" class="form-control" name="category">
+		<select name="category">
+			
+			<?php 
+
+			$query = "SELECT * FROM categories";
+			$select_category = mysqli_query($connection,$query);
+
+			if (!$select_category) {
+				die("Query Failed" . mysqli_error($connection));
+			}
+
+			while ($row = mysqli_fetch_assoc($select_category)) {
+				$cat_id = $row['cat_id'];
+				$cat_title = $row['cat_title'];
+			
+				echo "<option value='$cat_id'>$cat_title</option>";
+			}
+
+			?>
+
+		</select>
 	</div>
 
 	<div class="form-group">
@@ -53,7 +78,7 @@
 
 	<div class="form-group">
 		<label for="bus-date">Bus Date</label>
-		<input type="text" class="form-control" name="date" placeholder="DD-MM-YY">
+		<input type="date" style="margin-top: 10px;" min=<?php echo date('Y-m-d');?> max=<?php echo date('Y-m-d', strtotime(date('Y-m-d'). ' + 29 days'));?> name="date" class="form-control" id="date" placeholder="dd/mm/yyyy" >
 	</div>
 
 	<div class="form-group">
@@ -64,6 +89,11 @@
 	<div class="form-group">
 		<label for="via-time">Time at which bus reaches each station</label>
 		<input type="text" class="form-control" name="via-time" placeholder="All times separated by space">
+	</div>
+
+	<div class="form-group">
+		<label for="Max Seats">Max Seats</label>
+		<input type="text" class="form-control" name="max_seats" placeholder="Max Seats Available">
 	</div>
 
 	<div class="form-group">
