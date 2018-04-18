@@ -1,5 +1,5 @@
 <?php include"db.php" ?>
-    <nav class="navbar navbar-inverse navbar-fixed-top" style=" background-color: rgb(51, 27, 6);" role="navigation">
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #182c39;" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -33,7 +33,7 @@
                         if ($_SESSION['s_role']=='admin') {
                             ?>
                             <li>
-                                <a href="admin/index.php"><i class="fa fa-fw fa-desktop"></i>Admin</a>
+                                <a href="admin/index.php"><i class="fa fa-fw fa-child"></i>Admin</a>
                             </li>
                     }
                     <?php } } ?>
@@ -57,19 +57,19 @@
                             # code...
                             ?>
                             <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php 
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php 
 
-                            if(isset($_SESSION['s_username']))
-                            echo ucfirst($_SESSION['s_username']); ?> <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <a href="includes/logout.php"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
-                                </li>
-                            </ul>
+                                if(isset($_SESSION['s_username']))
+                                echo ucfirst($_SESSION['s_username']); ?> <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="includes/logout.php"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                                    </li>
+                                </ul>
                             </li>
                             
                     <?php    }

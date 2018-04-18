@@ -17,9 +17,16 @@
                 if(isset($_POST['submit'])) {
                     $source = $_POST['source'];
                     $destination = $_POST['destination'];
+                    $date = $_POST['date'];
+
+                    if ($source=="" || $destination=="") {
+                        echo "<h2>*Source And Destination Fields Are Mandatory To Fill</h2>";
+                    }
+                    else {
 
 
-                    $query = "SELECT * FROM posts WHERE post_source LIKE '%$source%' AND post_destination LIKE '%$destination%' OR post_via LIKE '%$source%$destination%'";
+                    //echo $date;
+                    $query = "SELECT * FROM posts WHERE post_via LIKE '%$source%$destination%' AND post_date='$date'";
 
                     $search_query = mysqli_query($connection,$query);
 
@@ -42,11 +49,6 @@
                             $post_id = $row['post_id']
                             ?>
 
-                            <h1 class="page-header">
-                            Page Heading
-                            <small>Secondary Text</small>
-                            </h1>
-
                             <!-- First Blog Post -->
                             <h2>
                                 <a href="bus_info.php?bus_id=<?php echo $post_id; ?>"><?php echo $post_title; ?></a>
@@ -54,7 +56,7 @@
                             <p class="lead">
                                 by <a href="index.php"><?php echo $post_author; ?></a>
                             </p>
-                            <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date; ?></p>
+                            <p><span class="glyphicon glyphicon-time"></span> Bus on <?php echo $post_date; ?></p>
                             <hr>
                             <a href="bus_info.php?bus_id=<?php echo $post_id; ?>"><img class="img-responsive" src="images/<?php echo $post_image; ?>" alt=""></a>
                             <!-- <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt=""> -->
@@ -66,7 +68,7 @@
                         <?php }  
                     }
                 }
-                ?>
+                }?>
 
      
 

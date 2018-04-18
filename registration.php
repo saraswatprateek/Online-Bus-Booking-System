@@ -7,7 +7,7 @@
 <?php
 
 if (isset($_POST['register'])) {
-echo "registered";
+//echo "registered";
     $username = $_POST['username'];
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
@@ -19,7 +19,20 @@ echo "registered";
     $tmp_image = $_FILES['image']['tmp_name'];
 
     move_uploaded_file($tmp_image, "images/$image");
+    if ($image == "") {
+      $image = "user_default.jpg";
+    }
 
+if ($username=="" || $firstname=="" || $lastname=="" || $email=="" || $phone_no=="" || $image=="" || $password=="") {
+  # code...
+  echo "**ALL FIELDS MANDATORY";
+}
+elseif (strlen($phone_no)!=10) {
+  # code...
+  echo "**PhoneNo Must Contain Of 10 bits";
+}
+
+else {
 
 $query = "INSERT INTO users(username, user_password, user_firstname, user_lastname, user_email, user_phoneno, user_role, user_image) VALUES('$username', '$password', '$firstname', '$lastname', '$email', '$phone_no', 'subscriber', '$image') ";
 
@@ -29,7 +42,10 @@ if(!$register_user) {
     die("Query Failed" . mysqli_error($connection));
 }
 
-header("Location: login.php");
+header("Location: index.php");
+
+}
+
 }
 
 ?>
@@ -64,7 +80,7 @@ header("Location: login.php");
                 </div>
 
                 <div class="form-group">
-                    <label for="bus-image">Bus Image</label>
+                    <label for="bus-image">UserImage</label>
                     <input type="file" name="image" >
                 </div>
 

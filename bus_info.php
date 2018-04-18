@@ -30,13 +30,13 @@
                         $bus_content = $row['post_content'];
                         $bus_id = $row['post_id'];
                         $bus_via = $row['post_via'];
+                        $times = $row['post_via_time'];
+                        $bus_cat = $row['post_category_id'];
+                        $available_seats = $row['available_seats'];
+                        $max_seats = $row['max_seats'];
                         $bus_stations = split(" ",$bus_via);
+                        $bus_times = split(" ",$times);
                         ?>
-
-                        <h1 class="page-header">
-                        Page Heading
-                        <small>Secondary Text</small>
-                        </h1>
 
                         <!-- First Blog Post -->
                         <h2>
@@ -53,16 +53,31 @@
                         <p><?php echo $bus_content ?></p>
                         
                         <div class="jumbotron jumb">
+                            <h2><b>Seat Matrix:</b></h2>
+                            <h5>Max:         <?php echo $max_seats ?></h5>
+                            <h5>Available:   <?php echo $available_seats ?></h5>
+
+
                             <h2><b>Stations Covered:</b></h2>
-                            <ul>
+                            <table class="table table-striped" style="width: 100%; margin-top:-20px;">
+                              <thead>
+                                  <th><u>Station</u></th>
+                                  <th><u>Time</u> </th>
+                              </thead>
+                              <tbody>
                                 <?php
 
                                     for ($i=0; $i < sizeof($bus_stations); $i++) { ?>
-                                        <li><?php echo $bus_stations[$i] ?></li> <?php
+                                        <tr>
+                                          <td><?php echo $bus_stations[$i]; ?></td>
+                                          <td><?php echo $bus_times[$i]; ?></td>
+                                        </tr> <?php 
                                     }
 
                                 ?>
-                            </ul>
+                                <br>
+                              </tbody>
+                            </table>
                         </div>
 
                         <div class="jumbotron">
@@ -73,14 +88,12 @@
 
                                     <select name="passenger_count" style="margin-bottom: 15px;margin-top: 15px;">
                                         <option value="0">Ticket Count</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
+                                        <?php
+                                            for ($i=1; $i <= $available_seats; $i++) { ?>
+                                                <option value="<?php echo $i ?>"><?php echo $i ?></option> <?php
+                                            }
+
+                                        ?>
                                     </select>
                                     <button class="btn-xs btn-primary" style="margin-left: 5px;">GO</button>
 
@@ -142,7 +155,35 @@
                                     }
                                     $source = $_POST['source'];
                                     $destination = $_POST['destination'];
-                                    
+                                    $cost = 0;
+
+
+                                    // for ($i=0; $i < sizeof($bus_stations); $i++) { 
+
+                                    //     if($bus_stations[$i]==$source) {
+
+                                    //         for ($j=$i; $j < sizeof($bus_stations); $j++) { 
+                                                
+                                    //             $k=$j++;
+                                    //             $query_new = "SELECT * FROM cost WHERE start=$bus_stations[$j] AND stopage=$bus_stations[$k] ";
+
+                                    //             $get_cost = mysqli_query($connection,$query_new);
+                                    //             while($row = mysqli_fetch_assoc($get_cost)) {
+                                    //                   $station_cost = $row['cost'];
+                                    //                   echo $station_cost;
+                                    //                   $cost += $station_cost;
+                                    //                }
+                                                   
+
+                                    //                if($bus_stations[$k]==$destination)
+                                    //                 break;
+                                    //         }
+                                    //         break;
+                                    //     }
+                                    // }
+                                    // echo $cost;
+
+
                                     // $query = "INSERT INTO orders(bus_id,user_id,user_name,user_age,source,destination,date) VALUES($selected_bus, $_SESSION['s_username'],$source,$destination,now())";
 
                                     $arr = array();
@@ -161,17 +202,19 @@
                                         $curr_age = $arr1[$i];
                                         $user_id = $_SESSION['s_id'];
 
-                                        $query = "INSERT INTO orders(bus_id, user_id, user_name, user_age, source, destination,date) VALUES($selected_bus, $user_id , '$curr_name', '$curr_age', '$source', '$destination', now())";
+                                        $query = "INSERT INTO orders(bus_id, user_id, user_name, user_age, source, destination,date,cost) VALUES($selected_bus, $user_id , '$curr_name', '$curr_age', '$source', '$destination', now(),$cost)";
+
+                                        $query_seat_update = "UPDATE posts SET available_seats = $available_seats + $count WHERE post_id = $bus_id";
 
                                         //echo $arr[$i];
                                         //echo $_SESSION['s_id'];
-
+                                        $update_seats_available = mysqli_query($connection,$query_seat_update);
                                         $booking_query = mysqli_query($connection,$query);
                                         if (!$booking_query) {
                                             die("Query Failed" . mysqli_error($connection));
                                         }
                                     }
-                                    header("Location: profile.php");
+                                    //header("Location: profile.php");
                                 }
 
                                 ?>

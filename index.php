@@ -5,7 +5,7 @@
     <?php include "includes/navigation.php"; ?>
 
     <!-- Page Content -->
-    <div class="container" style="background: rgba(51, 27, 6,0.6);">
+    <div class="container">
 
         <div class="row">
 
@@ -45,6 +45,10 @@
                         $post_image = $row['post_image'];
                         $post_content = $row['post_content'];
                         $post_id = $row['post_id'];
+
+                        if ($post_date > date('Y-m-d')) {
+                            # code...
+                        
                         ?>
 
                         <!-- <h1 class="page-header">
@@ -61,7 +65,7 @@
                         <p class="lead">
                             by <a href="index.php"><?php echo $post_author; ?></a>
                         </p>
-                        <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date; ?></p>
+                        <p><span class="glyphicon glyphicon-time"></span> Bus on <?php echo $post_date; ?></p>
                         <hr>
                         <a href="bus_info.php?bus_id=<?php echo $post_id; ?>"><img class="img-responsive" src="images/<?php echo $post_image; ?>" alt=""></a>
                         <!-- <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt=""> -->
@@ -71,7 +75,7 @@
 
                         <hr>
                         <br><br>
-                    <?php } ?>   
+                    <?php } } ?>   
 
 
             </div>
