@@ -80,6 +80,15 @@
                             </table>
                         </div>
 
+
+                        <?php
+
+                        if (isset($_SESSION['s_id'])) {
+                            # code...
+
+                        ?>
+
+
                         <div class="jumbotron">
                             <div class="container-fluid">
                                 <h2>Enter Details:</h2>
@@ -158,30 +167,32 @@
                                     $cost = 0;
 
 
-                                    // for ($i=0; $i < sizeof($bus_stations); $i++) { 
+                                    for ($i=0; $i < sizeof($bus_stations); $i++) { 
 
-                                    //     if($bus_stations[$i]==$source) {
+                                        if($bus_stations[$i]==$source) {
+                                            //echo $bus_stations[$i];
+                                            for ($j=$i; $j < sizeof($bus_stations); $j++) { 
+                                                //echo $bus_stations[$j];
+                                                $k=$j+1;
+                                                $begin = $bus_stations[$j];
+                                                $inter = $bus_stations[$k];
+                                                $query_new = "SELECT * FROM cost WHERE start='$begin' AND stopage='$inter' AND category=$bus_cat ";
 
-                                    //         for ($j=$i; $j < sizeof($bus_stations); $j++) { 
-                                                
-                                    //             $k=$j++;
-                                    //             $query_new = "SELECT * FROM cost WHERE start=$bus_stations[$j] AND stopage=$bus_stations[$k] ";
-
-                                    //             $get_cost = mysqli_query($connection,$query_new);
-                                    //             while($row = mysqli_fetch_assoc($get_cost)) {
-                                    //                   $station_cost = $row['cost'];
-                                    //                   echo $station_cost;
-                                    //                   $cost += $station_cost;
-                                    //                }
+                                                $get_cost = mysqli_query($connection,$query_new);
+                                                while($row = mysqli_fetch_assoc($get_cost)) {
+                                                      $station_cost = $row['cost'];
+                                                      echo $station_cost;
+                                                      $cost += $station_cost;
+                                                   }
                                                    
 
-                                    //                if($bus_stations[$k]==$destination)
-                                    //                 break;
-                                    //         }
-                                    //         break;
-                                    //     }
-                                    // }
-                                    // echo $cost;
+                                                   if($bus_stations[$k]==$destination)
+                                                    break;
+                                            }
+                                            break;
+                                        }
+                                    }
+                                    //echo $cost;
 
 
                                     // $query = "INSERT INTO orders(bus_id,user_id,user_name,user_age,source,destination,date) VALUES($selected_bus, $_SESSION['s_username'],$source,$destination,now())";
@@ -220,6 +231,7 @@
                                 ?>
                             </div>
                         </div>
+                        <?php } ?>
 
                         <hr>
                     <?php } ?>
